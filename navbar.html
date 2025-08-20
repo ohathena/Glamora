@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glamora - Beauty & Cosmetics</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: #fff;
+            color: #333;
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            background-color: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        /* Main Navigation Links */
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .nav-link {
+            color: #8B5A83;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: #B8336A;
+        }
+
+        /* Brand Logo */
+        .brand-logo {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 32px;
+            font-weight: 400;
+            color: #6B2C5C;
+            text-decoration: none;
+            letter-spacing: 2px;
+            cursor: pointer;
+            position: relative;
+            font-style: italic;
+            text-shadow: 0 1px 2px rgba(107, 44, 92, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .brand-logo::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #B8336A, transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .brand-logo:hover::after {
+            opacity: 1;
+        }
+
+        .brand-logo:hover {
+            color: #B8336A;
+            transform: translateY(-1px);
+        }
+
+        /* Right Side Icons */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            width: 280px;
+            padding: 10px 40px 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input:focus {
+            border-color: #8B5A83;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.2s ease;
+        }
+
+        .search-btn:hover {
+            color: #8B5A83;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #8B5A83;
+            position: relative;
+            transition: all 0.2s ease;
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        .icon-btn:hover {
+            color: #B8336A;
+            background-color: rgba(139, 90, 131, 0.05);
+        }
+
+        .icon-btn i {
+            font-size: 18px;
+        }
+
+        .cart-count, .wishlist-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #B8336A;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 16px;
+            text-align: center;
+        }
+
+        /* Secondary Navigation */
+        .secondary-nav {
+            background-color: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 15px 0;
+        }
+
+        .secondary-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .category-link {
+            color: #666;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 8px 0;
+            transition: all 0.2s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .category-link:hover {
+            color: #8B5A83;
+        }
+
+        .category-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: 0;
+            left: 50%;
+            background-color: #B8336A;
+            transition: all 0.3s ease;
+        }
+
+        .category-link:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .fragrance-link {
+            position: relative;
+        }
+
+        .fragrance-stars {
+            color: #FFD700;
+            font-size: 10px;
+            margin-left: 4px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            color: #8B5A83;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-menu:hover {
+            background-color: rgba(139, 90, 131, 0.05);
+        }
+
+        .mobile-menu i {
+            font-size: 20px;
+        }
+
+        .mobile-nav {
+            display: none;
+            background: #fff;
+            border-top: 1px solid #e0e0e0;
+            padding: 20px 0;
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav-links {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Current Page Indicator */
+        .current-page {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: #8B5A83;
+            margin-bottom: 10px;
+        }
+
+        .page-description {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 20px;
+            }
+
+            .main-nav {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .search-input {
+                width: 200px;
+            }
+
+            .nav-actions {
+                gap: 20px;
+            }
+
+            .category-nav {
+                gap: 30px;
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+
+            .category-link {
+                white-space: nowrap;
+            }
+
+            .secondary-nav-container {
+                padding: 0 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .brand-logo {
+                font-size: 24px;
+            }
+
+            .search-input {
+                width: 150px;
+            }
+
+            .nav-actions {
+                gap: 15px;
+            }
+
+            .category-nav {
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="#" class="brand-logo" onclick="navigateTo('home')">GLAMORA</a>
+
+            <div class="nav-actions">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search" id="searchInput">
+                    <button class="search-btn" onclick="performSearch()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <button class="icon-btn" onclick="navigateTo('wishlist')" title="Wishlist">
+                    <i class="far fa-heart"></i>
+                    <span class="wishlist-count" id="wishlistCount">3</span>
+                </button>
+                
+                <button class="icon-btn" onclick="navigateTo('cart')" title="Shopping Bag">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count" id="cartCount">2</span>
+                </button>
+                
+                <button class="icon-btn" onclick="navigateTo('profile')" title="Account">
+                    <i class="fas fa-user"></i>
+                </button>
+
+                <button class="mobile-menu" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Secondary Navigation -->
+    <nav class="secondary-nav">
+        <div class="secondary-nav-container">
+            <div class="category-nav">
+                <a href="#" class="category-link" onclick="navigateTo('hair')">HAIR</a>
+                <a href="#" class="category-link" onclick="navigateTo('makeup')">MAKEUP</a>
+                <a href="#" class="category-link" onclick="navigateTo('fragrance-collection')">FRAGRANCE</a>
+                <a href="#" class="category-link" onclick="navigateTo('skincare')">SKINCARE</a>
+                <a href="#" class="category-link" onclick="navigateTo('tools')">TOOLS</a>
+                <a href="#" class="category-link" onclick="navigateTo('gifts')">GIFTS</a>
+                <a href="#" class="category-link" onclick="navigateTo('bestsellers')">BESTSELLERS</a>
+                <a href="#" class="category-link" onclick="navigateTo('sale')">SALE</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Current Page Display -->
+    <div class="current-page">
+        <h1 class="page-title" id="pageTitle">Welcome to Glamora</h1>
+        <p class="page-description" id="pageDescription">Discover beauty that enhances your natural radiance</p>
+    </div>
+
+    <script>
+        // Page content data
+        const pageContent = {
+            home: {
+                title: "Welcome to Glamora",
+                description: "Discover beauty that enhances your natural radiance"
+            },
+            shop: {
+                title: "Shop All Products",
+                description: "Browse our complete collection of premium beauty products"
+            },
+            fragrance: {
+                title: "Fragrance Collection",
+                description: "Discover captivating scents that tell your unique story"
+            },
+            'shade-finder': {
+                title: "Shade Finder",
+                description: "Find your perfect match with our advanced shade matching technology"
+            },
+            'rare-impact': {
+                title: "Glamora Impact",
+                description: "Making a positive difference in communities around the world"
+            },
+            hair: {
+                title: "Hair Care",
+                description: "Professional hair care products for healthy, beautiful hair"
+            },
+            makeup: {
+                title: "Makeup Collection",
+                description: "Express yourself with our premium makeup essentials"
+            },
+            'fragrance-collection': {
+                title: "Fragrance",
+                description: "Signature scents crafted to complement your personality"
+            },
+            skincare: {
+                title: "Skincare Essentials",
+                description: "Nourish and protect your skin with our carefully formulated products"
+            },
+            tools: {
+                title: "Beauty Tools",
+                description: "Professional-grade tools for flawless application"
+            },
+            gifts: {
+                title: "Gift Sets",
+                description: "Thoughtfully curated gift sets for every special occasion"
+            },
+            bestsellers: {
+                title: "Bestsellers",
+                description: "Customer favorites and most-loved products"
+            },
+            sale: {
+                title: "Sale",
+                description: "Don't miss out on these limited-time offers"
+            },
+            wishlist: {
+                title: "My Wishlist",
+                description: "Your saved items are waiting for you"
+            },
+            cart: {
+                title: "Shopping Bag",
+                description: "Review your selected items before checkout"
+            },
+            profile: {
+                title: "My Account",
+                description: "Manage your profile, orders, and preferences"
+            }
+        };
+
+        let currentPage = 'home';
+
+        function navigateTo(page) {
+            currentPage = page;
+            updatePageContent(page);
+            if (document.getElementById('mobileNav')) {
+                document.getElementById('mobileNav').classList.remove('active');
+            }
+            if (history.pushState) {
+                history.pushState({page: page}, null, `#${page}`);
+            }
+        }
+
+        function updatePageContent(page) {
+            const content = pageContent[page] || pageContent.home;
+            document.getElementById('pageTitle').textContent = content.title;
+            document.getElementById('pageDescription').textContent = content.description;
+        }
+
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            if (searchTerm) {
+                alert(`Searching for: "${searchTerm}"`);
+                navigateTo('search');
+                updatePageContent('search');
+                document.getElementById('pageTitle').textContent = `Search Results for "${searchTerm}"`;
+                document.getElementById('pageDescription').textContent = `Showing results for your search query`;
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobileNav');
+            if (mobileNav) {
+                mobileNav.classList.toggle('active');
+            }
+        }
+
+        window.addEventListener('popstate', function(e) {
+            if (e.state && e.state.page) {
+                currentPage = e.state.page;
+                updatePageContent(currentPage);
+            }
+        });
+
+        window.addEventListener('load', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash && pageContent[hash]) {
+                navigateTo(hash);
+            }
+        });
+
+        function updateWishlistCount(count) {
+            document.getElementById('wishlistCount').textContent = count;
+        }
+
+        function updateCartCount(count) {
+            document.getElementById('cartCount').textContent = count;
+        }
+    </script>
+</body>
+</html>
