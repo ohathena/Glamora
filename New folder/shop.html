@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Glamora</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #333333;
+            background-color: #F8F0E9;
+        }
+        
+        :root {
+            --primary-color: #CD7E59;
+            --secondary-color: #F8F0E9;
+            --hover-color: #B86B47;
+            --light-pink: #F9D5C7;
+            --white: #FFFFFF;
+            --black: #000000;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-family: 'Times New Roman', serif;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: inherit;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        .icons {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .icons button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        /* Shop Content */
+        .shop-header {
+            text-align: center;
+            padding: 48px 0;
+            background-color: var(--white);
+        }
+        
+        .shop-title {
+            font-family: 'Times New Roman', serif;
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        
+        .filters {
+            background-color: var(--white);
+            padding: 24px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .filter-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            background: var(--white);
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+        
+        .sort-select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .products-section {
+            padding: 48px 0;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 32px;
+        }
+        
+        .product-card {
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .product-image {
+            aspect-ratio: 1 / 1;
+            background: var(--light-pink);
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .product-info {
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .product-title {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .product-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 10px 24px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--hover-color);
+        }
+        
+        @media (max-width: 768px) {
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo"><a href="brbgg.html" style="text-decoration: none; color: inherit;">Glamora</a></div>
+                <nav>
+                    <ul>
+                        <li><a href="brbgg.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="shade-finder.html">Shade Finder</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </nav>
+                <div class="icons">
+                    <button>🔍</button>
+                    <button>👤</button>
+                    <button id="cartToggle">🛒</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="shop-header">
+        <div class="container">
+            <h1 class="shop-title">Shop All</h1>
+            <p>Discover our full collection of inclusive beauty products</p>
+        </div>
+    </section>
+
+    <section class="filters">
+        <div class="container">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <button class="filter-btn active" data-category="all">All</button>
+                    <button class="filter-btn" data-category="face">Face</button>
+                    <button class="filter-btn" data-category="eye">Eye</button>
+                    <button class="filter-btn" data-category="lip">Lip</button>
+                    <button class="filter-btn" data-category="tools">Tools</button>
+                    <button class="filter-btn" data-category="fragrance">Fragrance</button>
+                </div>
+                <select class="sort-select" id="sortSelect">
+                    <option value="featured">Featured</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="name">Name A-Z</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <section class="products-section">
+        <div class="container">
+            <div class="products-grid" id="productsGrid">
+                <div class="product-card" data-category="face" data-price="23" data-name="Soft Pinch Liquid Blush" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1631214540242-3cd8c4b0b3b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Soft Pinch Liquid Blush</h3>
+                        <p class="product-price">$23</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="face" data-price="29" data-name="Liquid Touch Weightless Foundation" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Liquid Touch Weightless Foundation</h3>
+                        <p class="product-price">$29</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="face" data-price="25" data-name="Positive Light Silky Touch Highlighter" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1586495777744-4413f21062fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Positive Light Silky Touch Highlighter</h3>
+                        <p class="product-price">$25</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="face" data-price="22" data-name="Warm Wishes Effortless Bronzer Stick" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Warm Wishes Effortless Bronzer Stick</h3>
+                        <p class="product-price">$22</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="face" data-price="21" data-name="Always an Optimist Soft Radiant Concealer" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1583241800698-9c2e8b2b3b8a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Always an Optimist Soft Radiant Concealer</h3>
+                        <p class="product-price">$21</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="face" data-price="24" data-name="Soft Pinch Tinted Lip Oil" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Soft Pinch Tinted Lip Oil</h3>
+                        <p class="product-price">$24</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="eye" data-price="20" data-name="Perfect Strokes Matte Liquid Liner" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Perfect Strokes Matte Liquid Liner</h3>
+                        <p class="product-price">$20</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="eye" data-price="21" data-name="Perfect Strokes Universal Volumizing Mascara" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1631214540242-3cd8c4b0b3b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Perfect Strokes Universal Volumizing Mascara</h3>
+                        <p class="product-price">$21</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="eye" data-price="21" data-name="Brow Harmony Precision Pencil" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Brow Harmony Precision Pencil</h3>
+                        <p class="product-price">$21</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="eye" data-price="25" data-name="Discovery Eyeshadow Palette" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1586495777744-4413f21062fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Discovery Eyeshadow Palette</h3>
+                        <p class="product-price">$25</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="lip" data-price="16" data-name="Soft Matte Lip Cream" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Soft Matte Lip Cream</h3>
+                        <p class="product-price">$16</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="lip" data-price="18" data-name="Kind Words Matte Lipstick" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1583241800698-9c2e8b2b3b8a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Kind Words Matte Lipstick</h3>
+                        <p class="product-price">$18</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="lip" data-price="20" data-name="Soft Pinch Liquid Lip Balm" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Soft Pinch Liquid Lip Balm</h3>
+                        <p class="product-price">$20</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="lip" data-price="19" data-name="Encouraging Lip Liner" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Encouraging Lip Liner</h3>
+                        <p class="product-price">$19</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="tools" data-price="12" data-name="Soft Pinch Liquid Blush Brush" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Soft Pinch Liquid Blush Brush</h3>
+                        <p class="product-price">$12</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="tools" data-price="14" data-name="Always Perfect Setting Brush" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Always Perfect Setting Brush</h3>
+                        <p class="product-price">$14</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="tools" data-price="16" data-name="Liquid Touch Foundation Brush" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Liquid Touch Foundation Brush</h3>
+                        <p class="product-price">$16</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="tools" data-price="18" data-name="Positive Light Highlighting Brush" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1586495777744-4413f21062fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Positive Light Highlighting Brush</h3>
+                        <p class="product-price">$18</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="fragrance" data-price="60" data-name="Rare Eau de Parfum" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Glamora Eau de Parfum</h3>
+                        <p class="product-price">$60</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-category="fragrance" data-price="28" data-name="Rare Body Mist" onclick="window.location.href='product-detail.html'" style="cursor: pointer;">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Glamora Body Mist</h3>
+                        <p class="product-price">$28</p>
+                        <button class="btn-primary">Add to Bag</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const productCards = document.querySelectorAll('.product-card');
+        const sortSelect = document.getElementById('sortSelect');
+        const productsGrid = document.getElementById('productsGrid');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const category = btn.dataset.category;
+                
+                productCards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        sortSelect.addEventListener('change', () => {
+            const sortValue = sortSelect.value;
+            const cards = Array.from(productCards);
+            
+            cards.sort((a, b) => {
+                switch(sortValue) {
+                    case 'price-low':
+                        return parseInt(a.dataset.price) - parseInt(b.dataset.price);
+                    case 'price-high':
+                        return parseInt(b.dataset.price) - parseInt(a.dataset.price);
+                    case 'name':
+                        return a.dataset.name.localeCompare(b.dataset.name);
+                    default:
+                        return 0;
+                }
+            });
+            
+            cards.forEach(card => productsGrid.appendChild(card));
+        });
+    </script>
+    <script src="cart.js"></script>
+    <script>
+        document.querySelectorAll('.btn-primary').forEach(btn => {
+            if (btn.textContent === 'Add to Bag') {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const card = e.target.closest('.product-card');
+                    const name = card.querySelector('.product-title').textContent;
+                    const price = card.querySelector('.product-price').textContent.replace('$', '');
+                    addToCart(name, price);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shade Finder - Glamora</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #333333;
+            background-color: #F8F0E9;
+        }
+        
+        :root {
+            --primary-color: #CD7E59;
+            --secondary-color: #F8F0E9;
+            --hover-color: #B86B47;
+            --light-pink: #F9D5C7;
+            --white: #FFFFFF;
+            --black: #000000;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-family: 'Times New Roman', serif;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: inherit;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        .icons {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .icons button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        /* Shade Finder */
+        .shade-finder-hero {
+            background: linear-gradient(135deg, var(--light-pink), var(--secondary-color));
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero-title {
+            font-family: 'Times New Roman', serif;
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        
+        .hero-subtitle {
+            font-size: 20px;
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .quiz-container {
+            background-color: var(--white);
+            padding: 48px 0;
+        }
+        
+        .quiz-progress {
+            background-color: #f0f0f0;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 48px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            background-color: var(--primary-color);
+            height: 100%;
+            width: 33%;
+            transition: width 0.3s ease;
+        }
+        
+        .quiz-step {
+            display: none;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .quiz-step.active {
+            display: block;
+        }
+        
+        .step-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        
+        .step-description {
+            font-size: 16px;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .option-card {
+            background: var(--white);
+            border: 2px solid #eee;
+            border-radius: 8px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .option-card:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .option-card.selected {
+            border-color: var(--primary-color);
+            background-color: var(--light-pink);
+        }
+        
+        .skin-tone-options {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .skin-tone {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 4px solid transparent;
+            transition: border-color 0.3s;
+            position: relative;
+        }
+        
+        .skin-tone.selected {
+            border-color: var(--primary-color);
+        }
+        
+        .skin-tone-label {
+            position: absolute;
+            bottom: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        
+        .quiz-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        
+        .btn-secondary {
+            background: none;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .btn-primary:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .results-section {
+            display: none;
+            background-color: var(--white);
+            padding: 48px 0;
+        }
+        
+        .results-title {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .recommended-products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+        
+        .product-recommendation {
+            background: var(--light-pink);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+        }
+        
+        .product-image {
+            width: 100px;
+            height: 100px;
+            background: var(--secondary-color);
+            border-radius: 8px;
+            margin: 0 auto 16px;
+        }
+        
+        .product-name {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .product-shade {
+            color: var(--primary-color);
+            margin-bottom: 16px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 36px;
+            }
+            
+            .quiz-buttons {
+                flex-direction: column;
+            }
+            
+            .skin-tone-options {
+                gap: 8px;
+            }
+            
+            .skin-tone {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo"><a href="brbgg.html" style="text-decoration: none; color: inherit;">Glamora</a></div>
+                <nav>
+                    <ul>
+                        <li><a href="brbgg.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="shade-finder.html">Shade Finder</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </nav>
+                <div class="icons">
+                    <button>🔍</button>
+                    <button>👤</button>
+                    <button>🛒</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="shade-finder-hero">
+        <div class="container">
+            <h1 class="hero-title">Find Your Perfect Shade</h1>
+            <p class="hero-subtitle">Get personalized foundation and concealer recommendations in just 3 simple steps</p>
+        </div>
+    </section>
+
+    <section class="quiz-container">
+        <div class="container">
+            <div class="quiz-progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <!-- Step 1: Skin Tone -->
+            <div class="quiz-step active" id="step1">
+                <h2 class="step-title">What's your skin tone?</h2>
+                <p class="step-description">Select the shade that best matches your skin</p>
+                
+                <div class="skin-tone-options">
+                    <div class="skin-tone" style="background-color: #F2D2B3;" data-tone="fair-light">
+                        <div class="skin-tone-label">Fair Light</div>
+                    </div>
+                    <div class="skin-tone" style="background-color: #E8C2A1;" data-tone="light">
+                        <div class="skin-tone-label">Light</div>
+                    </div>
+                    <div class="skin-tone" style="background-color: #D9A17A;" data-tone="light-medium">
+                        <div class="skin-tone-label">Light Medium</div>
+                    </div>
+                    <div class="skin-tone" style="background-color: #C28A66;" data-tone="medium">
+                        <div class="skin-tone-label">Medium</div>
+                    </div>
+                    <div class="skin-tone" style="background-color: #9A6D51;" data-tone="medium-deep">
+                        <div class="skin-tone-label">Medium Deep</div>
+                    </div>
+                    <div class="skin-tone" style="background-color: #6E4B3B;" data-tone="deep">
+                        <div class="skin-tone-label">Deep</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Undertone -->
+            <div class="quiz-step" id="step2">
+                <h2 class="step-title">What's your undertone?</h2>
+                <p class="step-description">Look at your wrist veins in natural light</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-undertone="cool">
+                        <h3>Cool</h3>
+                        <p>Blue or purple veins</p>
+                    </div>
+                    <div class="option-card" data-undertone="warm">
+                        <h3>Warm</h3>
+                        <p>Green veins</p>
+                    </div>
+                    <div class="option-card" data-undertone="neutral">
+                        <h3>Neutral</h3>
+                        <p>Mix of blue and green veins</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Coverage -->
+            <div class="quiz-step" id="step3">
+                <h2 class="step-title">What coverage do you prefer?</h2>
+                <p class="step-description">Choose your ideal foundation coverage level</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" data-coverage="light">
+                        <h3>Light Coverage</h3>
+                        <p>Natural, breathable finish</p>
+                    </div>
+                    <div class="option-card" data-coverage="medium">
+                        <h3>Medium Coverage</h3>
+                        <p>Balanced coverage and comfort</p>
+                    </div>
+                    <div class="option-card" data-coverage="full">
+                        <h3>Full Coverage</h3>
+                        <p>Maximum coverage and longevity</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-buttons">
+                <button class="btn-secondary" id="prevBtn" style="display: none;">Previous</button>
+                <button class="btn-primary" id="nextBtn" disabled>Next</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="results-section" id="resultsSection">
+        <div class="container">
+            <h2 class="results-title">Your Perfect Match</h2>
+            <div class="recommended-products" id="recommendedProducts">
+                <!-- Results will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let currentStep = 1;
+        let selections = {};
+        
+        const steps = document.querySelectorAll('.quiz-step');
+        const progressBar = document.getElementById('progressBar');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const resultsSection = document.getElementById('resultsSection');
+
+        // Skin tone selection
+        document.querySelectorAll('.skin-tone').forEach(tone => {
+            tone.addEventListener('click', () => {
+                document.querySelectorAll('.skin-tone').forEach(t => t.classList.remove('selected'));
+                tone.classList.add('selected');
+                selections.skinTone = tone.dataset.tone;
+                updateNextButton();
+            });
+        });
+
+        // Option card selection
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const parent = card.parentElement;
+                parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                
+                if (card.dataset.undertone) {
+                    selections.undertone = card.dataset.undertone;
+                } else if (card.dataset.coverage) {
+                    selections.coverage = card.dataset.coverage;
+                }
+                updateNextButton();
+            });
+        });
+
+        function updateNextButton() {
+            const currentStepElement = document.getElementById(`step${currentStep}`);
+            const hasSelection = currentStepElement.querySelector('.selected');
+            nextBtn.disabled = !hasSelection;
+        }
+
+        function updateProgress() {
+            const progress = (currentStep / 3) * 100;
+            progressBar.style.width = progress + '%';
+        }
+
+        function showStep(step) {
+            steps.forEach(s => s.classList.remove('active'));
+            document.getElementById(`step${step}`).classList.add('active');
+            
+            prevBtn.style.display = step > 1 ? 'block' : 'none';
+            nextBtn.textContent = step === 3 ? 'Get Results' : 'Next';
+            
+            updateProgress();
+            updateNextButton();
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < 3) {
+                currentStep++;
+                showStep(currentStep);
+            } else {
+                showResults();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        });
+
+        function showResults() {
+            document.querySelector('.quiz-container').style.display = 'none';
+            resultsSection.style.display = 'block';
+            
+            const products = getRecommendedProducts();
+            const container = document.getElementById('recommendedProducts');
+            
+            container.innerHTML = products.map(product => `
+                <div class="product-recommendation">
+                    <div class="product-image"></div>
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-shade">Shade: ${product.shade}</div>
+                    <button class="btn-primary">Shop Now</button>
+                </div>
+            `).join('');
+        }
+
+        function getRecommendedProducts() {
+            // Simple recommendation logic based on selections
+            const shadeMap = {
+                'fair-light': 'Fair Light Neutral',
+                'light': 'Light Warm',
+                'light-medium': 'Light Medium Cool',
+                'medium': 'Medium Neutral',
+                'medium-deep': 'Medium Deep Warm',
+                'deep': 'Deep Cool'
+            };
+
+            return [
+                {
+                    name: 'Liquid Touch Weightless Foundation',
+                    shade: shadeMap[selections.skinTone] || 'Medium Neutral'
+                },
+                {
+                    name: 'Always an Optimist Concealer',
+                    shade: shadeMap[selections.skinTone] || 'Medium Neutral'
+                }
+            ];
+        }
+    </script>
+</body>
+</html>

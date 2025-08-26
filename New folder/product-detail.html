@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soft Pinch Liquid Blush - Glamora</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #333333;
+            background-color: #F8F0E9;
+        }
+        
+        :root {
+            --primary-color: #CD7E59;
+            --secondary-color: #F8F0E9;
+            --hover-color: #B86B47;
+            --light-pink: #F9D5C7;
+            --white: #FFFFFF;
+            --black: #000000;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-family: 'Times New Roman', serif;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: inherit;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        .icons {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .icons button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        /* Product Detail */
+        .product-detail {
+            padding: 48px 0;
+            background-color: var(--white);
+        }
+        
+        .product-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+        
+        .product-images {
+            position: sticky;
+            top: 100px;
+        }
+        
+        .main-image {
+            aspect-ratio: 1 / 1;
+            background: var(--light-pink);
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .thumbnail-images {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .thumbnail {
+            width: 60px;
+            height: 60px;
+            background: var(--secondary-color);
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .thumbnail.active {
+            border-color: var(--primary-color);
+        }
+        
+        .product-info h1 {
+            font-family: 'Times New Roman', serif;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        
+        .product-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 24px;
+        }
+        
+        .product-description {
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        
+        .shade-selector {
+            margin-bottom: 32px;
+        }
+        
+        .shade-title {
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        
+        .shade-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .shade-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .shade-option.selected {
+            border-color: var(--primary-color);
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .quantity-btn {
+            background: none;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .quantity-input {
+            border: none;
+            width: 50px;
+            text-align: center;
+            padding: 8px;
+        }
+        
+        .add-to-cart {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 16px 32px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: var(--hover-color);
+        }
+        
+        .wishlist-btn {
+            background: none;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 12px 32px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .wishlist-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .product-details {
+            margin-top: 48px;
+        }
+        
+        .details-tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 24px;
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab-btn.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            line-height: 1.6;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .product-layout {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .product-images {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo"><a href="brbgg.html" style="text-decoration: none; color: inherit;">Glamora</a></div>
+                <nav>
+                    <ul>
+                        <li><a href="brbgg.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="shade-finder.html">Shade Finder</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </nav>
+                <div class="icons">
+                    <button>🔍</button>
+                    <button>👤</button>
+                    <button>🛒</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="product-detail">
+        <div class="container">
+            <div class="product-layout">
+                <div class="product-images">
+                    <div class="main-image" id="mainImage"></div>
+                    <div class="thumbnail-images">
+                        <div class="thumbnail active" data-image="1"></div>
+                        <div class="thumbnail" data-image="2"></div>
+                        <div class="thumbnail" data-image="3"></div>
+                        <div class="thumbnail" data-image="4"></div>
+                    </div>
+                </div>
+                
+                <div class="product-info">
+                    <h1>Soft Pinch Liquid Blush</h1>
+                    <div class="product-price">$23</div>
+                    
+                    <div class="product-description">
+                        <p>Meet our award-winning bestseller that's sold every four seconds. Lightweight, layerable, long-lasting—and loved by so many worldwide. Get pinch-perfect color in just one dot.</p>
+                        <br>
+                        <p>This weightless, long-lasting liquid blush seamlessly blends into skin for a soft, healthy flush. The concentrated formula gives you a natural-looking color that lasts all day.</p>
+                    </div>
+                    
+                    <div class="shade-selector">
+                        <div class="shade-title">Choose Your Shade:</div>
+                        <div class="shade-options">
+                            <div class="shade-option selected" style="background-color: #F4A6A6;" data-shade="Hope"></div>
+                            <div class="shade-option" style="background-color: #E89B9B;" data-shade="Bliss"></div>
+                            <div class="shade-option" style="background-color: #D48B8B;" data-shade="Joy"></div>
+                            <div class="shade-option" style="background-color: #C67B7B;" data-shade="Happy"></div>
+                            <div class="shade-option" style="background-color: #B86B6B;" data-shade="Encourage"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="quantity-selector">
+                        <label>Quantity:</label>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" id="decreaseBtn">-</button>
+                            <input type="number" class="quantity-input" id="quantityInput" value="1" min="1">
+                            <button class="quantity-btn" id="increaseBtn">+</button>
+                        </div>
+                    </div>
+                    
+                    <button class="add-to-cart" id="addToCartBtn">Add to Bag</button>
+                    <button class="wishlist-btn">Add to Wishlist ♡</button>
+                    
+                    <div class="product-details">
+                        <div class="details-tabs">
+                            <button class="tab-btn active" data-tab="description">Description</button>
+                            <button class="tab-btn" data-tab="ingredients">Ingredients</button>
+                            <button class="tab-btn" data-tab="how-to-use">How to Use</button>
+                        </div>
+                        
+                        <div class="tab-content active" id="description">
+                            <p>This weightless, long-lasting liquid blush seamlessly blends into skin for a soft, healthy flush. The concentrated formula gives you a natural-looking color that lasts all day. Available in 6 universally flattering shades.</p>
+                        </div>
+                        
+                        <div class="tab-content" id="ingredients">
+                            <p>Water/Aqua/Eau, Dimethicone, Isododecane, Alcohol Denat., Butylene Glycol, PEG-10 Dimethicone, Disteardimonium Hectorite, Sodium Chloride, Phenoxyethanol, Disodium EDTA, Hydrogen Dimethicone, Ethylhexylglycerin, Propylene Carbonate, Triethoxycaprylylsilane, Aluminum Hydroxide. May Contain/Peut Contenir (+/-): Titanium Dioxide (CI 77891), Iron Oxides (CI 77491, CI 77492, CI 77499), Red 6 (CI 15850), Red 7 Lake (CI 15850), Red 28 Lake (CI 45410), Yellow 5 Lake (CI 19140).</p>
+                        </div>
+                        
+                        <div class="tab-content" id="how-to-use">
+                            <p>1. Start with one small dot on the apples of your cheeks<br>
+                            2. Blend outward using your fingers or a brush<br>
+                            3. Build up color gradually for your desired intensity<br>
+                            4. Can also be used on lips for a natural tint</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Thumbnail image switching
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        thumbnails.forEach(thumb => {
+            thumb.addEventListener('click', () => {
+                thumbnails.forEach(t => t.classList.remove('active'));
+                thumb.classList.add('active');
+            });
+        });
+
+        // Shade selection
+        const shadeOptions = document.querySelectorAll('.shade-option');
+        shadeOptions.forEach(shade => {
+            shade.addEventListener('click', () => {
+                shadeOptions.forEach(s => s.classList.remove('selected'));
+                shade.classList.add('selected');
+            });
+        });
+
+        // Quantity controls
+        const decreaseBtn = document.getElementById('decreaseBtn');
+        const increaseBtn = document.getElementById('increaseBtn');
+        const quantityInput = document.getElementById('quantityInput');
+
+        decreaseBtn.addEventListener('click', () => {
+            const current = parseInt(quantityInput.value);
+            if (current > 1) {
+                quantityInput.value = current - 1;
+            }
+        });
+
+        increaseBtn.addEventListener('click', () => {
+            const current = parseInt(quantityInput.value);
+            quantityInput.value = current + 1;
+        });
+
+        // Tab switching
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.dataset.tab;
+                
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                btn.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Add to cart functionality
+        document.getElementById('addToCartBtn').addEventListener('click', () => {
+            const name = document.querySelector('h1').textContent;
+            const price = document.querySelector('.product-price').textContent.replace('$', '');
+            addToCart(name, price);
+        });
+    </script>
+    <script src="cart.js"></script>
+</body>
+</html>

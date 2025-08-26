@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glamora</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #333333;
+            background-color: #F8F0E9;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        /* Color Variables */
+        :root {
+            --primary-color: #CD7E59;
+            --secondary-color: #F8F0E9;
+            --hover-color: #B86B47;
+            --light-pink: #F9D5C7;
+            --white: #FFFFFF;
+            --black: #000000;
+            --text-color: #333333;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Banner */
+        .banner {
+            background-color: var(--black);
+            color: var(--white);
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-family: 'Times New Roman', serif;
+            font-size: 24px;
+            font-weight: bold;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            flex: 1;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 24px;
+        }
+        
+        nav a, nav button {
+            font-weight: 500;
+            transition: color 0.3s;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        nav a:hover, nav button:hover {
+            color: var(--primary-color);
+        }
+        
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            left: 0;
+            background-color: var(--white);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            padding: 16px;
+            z-index: 1;
+        }
+        
+        .dropdown-content li {
+            margin-bottom: 8px;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .icons {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .icons button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .search-panel, .mobile-nav, .cart-sidebar {
+            display: none;
+        }
+        
+        .search-panel.active, .mobile-nav.active {
+            display: block;
+            background-color: var(--white);
+            padding: 16px;
+            border-top: 1px solid #eee;
+        }
+        
+        .search-panel input {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            display: block;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(248, 240, 233, 0.8), rgba(249, 213, 199, 0.8)), url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-family: 'Times New Roman', serif;
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        
+        .hero h3 {
+            font-size: 28px;
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+        
+        .hero p {
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 12px 32px;
+            border-radius: 50px;
+            display: inline-block;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--hover-color);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            padding: 10px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            transition: background-color 0.3s;
+            border: 2px solid var(--primary-color);
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(205, 126, 89, 0.05);
+        }
+        
+        /* Bestsellers Section */
+        .section {
+            padding: 64px 0;
+        }
+        
+        .section-white {
+            background-color: var(--white);
+        }
+        
+        .section-cream {
+            background-color: var(--secondary-color);
+        }
+        
+        .section-title {
+            font-family: 'Times New Roman', serif;
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 32px;
+        }
+        
+        @media (min-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .products-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .product-card {
+            text-align: center;
+        }
+        
+        .product-image {
+            aspect-ratio: 1 / 1;
+            background-color: var(--secondary-color);
+            margin-bottom: 16px;
+            border-radius: 8px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .product-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .product-price {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .center-btn {
+            text-align: center;
+            margin-top: 48px;
+        }
+        
+        /* Feature Product */
+        .feature-product {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        @media (min-width: 768px) {
+            .feature-product {
+                flex-direction: row;
+            }
+        }
+        
+        .feature-image {
+            width: 100%;
+            margin-bottom: 32px;
+        }
+        
+        @media (min-width: 768px) {
+            .feature-image {
+                width: 50%;
+                margin-bottom: 0;
+            }
+            
+            .feature-content {
+                width: 50%;
+                padding-left: 48px;
+                text-align: left;
+            }
+        }
+        
+        .feature-content {
+            text-align: center;
+        }
+        
+        .feature-image-placeholder {
+            aspect-ratio: 1 / 1;
+            background-color: var(--light-pink);
+            border-radius: 8px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        /* Shade Finder */
+        .shade-finder {
+            text-align: center;
+        }
+        
+        .shade-samples {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 40px;
+        }
+        
+        .shade-sample {
+            text-align: center;
+            font-size: 12px;
+        }
+        
+        .shade-circle {
+            height: 32px;
+            width: 32px;
+            border-radius: 50%;
+            margin-bottom: 4px;
+        }
+        
+        /* Instagram Section */
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        
+        @media (min-width: 768px) {
+            .instagram-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .instagram-image {
+            aspect-ratio: 1 / 1;
+            background-color: var(--light-pink);
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+        }
+        
+        /* Newsletter */
+        .newsletter-form {
+            display: flex;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 50px 0 0 50px;
+        }
+        
+        .newsletter-form button {
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 0 50px 50px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: var(--hover-color);
+        }
+        
+        .newsletter-disclaimer {
+            font-size: 12px;
+            max-width: 400px;
+            margin: 16px auto 0;
+            text-align: center;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--white);
+            padding: 48px 0;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+        
+        @media (min-width: 768px) {
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .footer-title {
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-links a {
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .social-links a {
+            color: var(--primary-color);
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--hover-color);
+        }
+        
+        .copyright {
+            font-size: 14px;
+        }
+        
+        /* Cart Sidebar */
+        .cart-sidebar.active {
+            display: block;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            background-color: var(--white);
+            box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+            z-index: 200;
+            padding: 16px;
+            overflow-y: auto;
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .cart-empty {
+            text-align: center;
+            padding: 32px 0;
+        }
+        
+        .cart-empty p {
+            margin-bottom: 16px;
+        }
+        
+        .overlay {
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 150;
+        }
+        
+        /* Mobile Styles */
+        @media (max-width: 767px) {
+            .nav-toggle {
+                display: block;
+            }
+            
+            nav {
+                display: none;
+            }
+            
+            .logo {
+                flex: 0;
+                margin: 0 auto;
+            }
+            
+            .mobile-nav {
+                text-align: left;
+            }
+            
+            .mobile-nav ul li {
+                margin-bottom: 12px;
+            }
+            
+            .mobile-nav button {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                text-align: left;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Banner -->
+    <div class="banner">
+        <div class="container">
+            <p>Free Luminizer Deluxe Sample w/$35+ order. Code: <strong>GLOW25</strong></p>
+            <p>Free U.S. Standard Shipping w/ $50+.</p>
+        </div>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <!-- Mobile Menu Button -->
+                <button class="nav-toggle" id="navToggle">☰ Open Navigation</button>
+                
+                <!-- Logo -->
+                <div class="logo"><a href="brbgg.html" style="text-decoration: none; color: inherit;">Glamora</a></div>
+                
+                <!-- Desktop Navigation -->
+                <nav>
+                    <ul>
+                        <li class="dropdown">
+                            <button>Shop ⌃</button>
+                            <ul class="dropdown-content">
+                                <li><a href="shop.html">Shop All</a></li>
+                                <li><a href="shop.html">New</a></li>
+                                <li><a href="shop.html">Bestsellers</a></li>
+                                <li><a href="product-detail.html">Face</a></li>
+                                <li><a href="product-detail.html">Eye</a></li>
+                                <li><a href="product-detail.html">Lip</a></li>
+                                <li><a href="product-detail.html">Tools</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="shade-finder.html">Shade Finder</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </nav>
+                
+                <!-- Icons -->
+                <div class="icons">
+                    <button id="searchToggle">🔍</button>
+                    <button>👤</button>
+                    <button id="cartToggle">🛒</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav" id="mobileNav">
+            <div class="container">
+                <ul>
+                    <li>
+                        <button>
+                            Shop <span>+</span>
+                        </button>
+                    </li>
+                    <li><a href="#">Fragrance</a></li>
+                    <li><a href="#">Shade Finder</a></li>
+                    <li><a href="#">Rare Impact</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Search Panel -->
+        <div class="search-panel" id="searchPanel">
+            <div class="container">
+                <input type="text" placeholder="Search">
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>NEW</h2>
+                <h3>Glamora Eau de Parfum</h3>
+                <p>
+                    The essence of the perfect moment captured in a warm, decadent blend of creamy
+                    caramel, intoxicating vanilla, and earthy sandalwood.
+                </p>
+                <button class="btn-primary" onclick="window.location.href='shop.html'">SHOP NOW</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Bestsellers Section -->
+    <section class="section section-white">
+        <div class="container">
+            <h2 class="section-title">Bestsellers</h2>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <h3 class="product-title">Soft Pinch Liquid Blush</h3>
+                    <p class="product-price">$23</p>
+                    <button class="btn-primary">Add to Bag</button>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <h3 class="product-title">Liquid Touch Foundation</h3>
+                    <p class="product-price">$29</p>
+                    <button class="btn-primary">Add to Bag</button>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1586495777744-4413f21062fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <h3 class="product-title">Positive Light Highlighter</h3>
+                    <p class="product-price">$25</p>
+                    <button class="btn-primary">Add to Bag</button>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <h3 class="product-title">Kind Words Lip Liner</h3>
+                    <p class="product-price">$16</p>
+                    <button class="btn-primary">Add to Bag</button>
+                </div>
+            </div>
+            
+            <div class="center-btn">
+                <button class="btn-secondary" onclick="window.location.href='shop.html'">SHOP ALL BESTSELLERS</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Feature Product -->
+    <section class="section section-cream">
+        <div class="container">
+            <div class="feature-product">
+                <div class="feature-image">
+                    <div class="feature-image-placeholder" style="background-image: url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');"></div>
+                </div>
+                <div class="feature-content">
+                    <h3 class="product-title">Soft Pinch Liquid Blush</h3>
+                    <p style="margin-bottom: 24px;">
+                        Meet our award-winning bestseller that's sold every four seconds. Lightweight,
+                        layerable, long-lasting—and loved by so many worldwide. Get pinch-perfect
+                        color in just one dot.
+                    </p>
+                    <button class="btn-secondary" onclick="window.location.href='product-detail.html'">SHOP SOFT PINCH</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Shade Finder -->
+    <section class="section section-white">
+        <div class="container">
+            <div class="shade-finder">
+                <h2 class="section-title">Foundation Shade Finder</h2>
+                <p style="max-width: 500px; margin: 0 auto 32px;">
+                    Find your best shade, along with complexion must-haves perfect for your skin
+                    tone. All in just 3 simple steps.
+                </p>
+                <button class="btn-primary" onclick="window.location.href='shade-finder.html'">MATCH ME</button>
+                
+                <div class="shade-samples">
+                    <div class="shade-sample">
+                        <div class="shade-circle" style="background-color: #F2D2B3;"></div>
+                        <span>light</span>
+                    </div>
+                    <div class="shade-sample">
+                        <div class="shade-circle" style="background-color: #E8C2A1;"></div>
+                        <span>light medium</span>
+                    </div>
+                    <div class="shade-sample">
+                        <div class="shade-circle" style="background-color: #D9A17A;"></div>
+                        <span>medium</span>
+                    </div>
+                    <div class="shade-sample">
+                        <div class="shade-circle" style="background-color: #C28A66;"></div>
+                        <span>medium tan</span>
+                    </div>
+                    <div class="shade-sample">
+                        <div class="shade-circle" style="background-color: #9A6D51;"></div>
+                        <span>medium deep</span>
+                    </div>
+                    <div class="shade-sample">
+                        <div class="shade-circle" style="background-color: #6E4B3B;"></div>
+                        <span>deep</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Instagram Section -->
+    <section class="section section-cream">
+        <div class="container">
+            <h2 class="section-title">@Glamora</h2>
+            <h3 style="text-align: center; font-size: 20px; margin-bottom: 24px;">This is Your Community</h3>
+            <p style="text-align: center; max-width: 500px; margin: 0 auto 32px;">
+                Share your #GlamoraRoutine and tag @glamora for a chance to be featured!
+            </p>
+            
+            <div class="instagram-grid">
+                <div class="instagram-image" style="background-image: url('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                <div class="instagram-image" style="background-image: url('https://images.unsplash.com/photo-1586495777744-4413f21062fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                <div class="instagram-image" style="background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+                <div class="instagram-image" style="background-image: url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
+            </div>
+            
+            <div class="center-btn" style="margin-top: 32px;">
+                <button class="btn-secondary" onclick="window.location.href='about.html'">LEARN MORE</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Impact Section -->
+    <section class="section section-white">
+        <div class="container">
+            <div style="text-align: center;">
+                <h2 class="section-title">Make an impact on mental health</h2>
+                <p style="max-width: 500px; margin: 0 auto 32px;">
+                    1% of Glamora's annual sales will go directly to the Glamora Impact Fund to
+                    expand mental health services in underserved communities.
+                </p>
+                <button class="btn-secondary" onclick="window.location.href='about.html'">LEARN MORE</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Newsletter -->
+    <section class="section section-cream" style="padding: 48px 0;">
+        <div class="container">
+            <div style="text-align: center;">
+                <h3 style="font-size: 20px; margin-bottom: 16px;">
+                    Sign up for email and/or texts for the latest updates, special offers, and more.
+                </h3>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your Email">
+                    <button type="submit">Join Us</button>
+                </form>
+                <p class="newsletter-disclaimer">
+                    By entering your email address and clicking "Join Us" you agree to receive
+                    marketing email messages from Glamora at the email address provided.
+                    Unsubscribe at any time.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4 class="footer-title">SHOP</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Face</a></li>
+                        <li><a href="#">Eye</a></li>
+                        <li><a href="#">Lip</a></li>
+                        <li><a href="#">Tools</a></li>
+                        <li><a href="#">Online Only</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">COMPANY</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Glamora Impact</a></li>
+                        <li><a href="#">Made Accessible</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Store Locator</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">CUSTOMER SERVICE</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Start a U.S. Return</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shade Match Live Chat</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <div class="social-links">
+                        <a href="#">Instagram</a>
+                        <a href="#">Facebook</a>
+                        <a href="#">Twitter</a>
+                    </div>
+                    <p class="copyright">© 2025 Glamora all rights reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cart Sidebar -->
+    <div class="overlay" id="overlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2 style="font-size: 20px; font-weight: bold;">Your cart</h2>
+            <button id="closeCart">✕</button>
+        </div>
+        
+        <div id="cartItems">
+            <p>Your cart is empty.</p>
+        </div>
+        
+        <div style="margin-top: 24px; padding-top: 24px; border-top: 2px solid #eee;">
+            <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; margin-bottom: 16px;">
+                <span>Total:</span>
+                <span id="cartTotal">$0</span>
+            </div>
+            <button class="btn-primary" style="width: 100%; margin-bottom: 12px;">Checkout</button>
+            <button class="btn-primary" id="continueShopping" style="width: 100%; background: transparent; color: var(--primary-color); border: 2px solid var(--primary-color);">Continue Shopping</button>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Mobile Navigation
+        const navToggle = document.getElementById('navToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        navToggle.addEventListener('click', function() {
+            mobileNav.classList.toggle('active');
+            if (mobileNav.classList.contains('active')) {
+                navToggle.textContent = "✕ Close Navigation";
+            } else {
+                navToggle.textContent = "☰ Open Navigation";
+            }
+        });
+        
+        // Toggle Search Panel
+        const searchToggle = document.getElementById('searchToggle');
+        const searchPanel = document.getElementById('searchPanel');
+        
+        searchToggle.addEventListener('click', function() {
+            searchPanel.classList.toggle('active');
+            if (searchPanel.classList.contains('active')) {
+                searchToggle.textContent = "✕";
+            } else {
+                searchToggle.textContent = "🔍";
+            }
+        });
+        
+        // Toggle Cart Sidebar
+        const cartToggle = document.getElementById('cartToggle');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const overlay = document.getElementById('overlay');
+        const closeCart = document.getElementById('closeCart');
+        const continueShopping = document.getElementById('continueShopping');
+        
+        function openCart() {
+            cartSidebar.classList.add('active');
+            overlay.classList.add('active');
+        }
+        
+        function closeCartFunction() {
+            cartSidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+        
+        cartToggle.addEventListener('click', openCart);
+        closeCart.addEventListener('click', closeCartFunction);
+        continueShopping.addEventListener('click', closeCartFunction);
+        overlay.addEventListener('click', closeCartFunction);
+        
+        // Mobile Menu Dropdowns
+        const mobileMenuButtons = document.querySelectorAll('.mobile-nav button');
+        
+        mobileMenuButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const span = this.querySelector('span');
+                if (span.textContent === '+') {
+                    span.textContent = '-';
+                } else {
+                    span.textContent = '+';
+                }
+                
+                // Here you would toggle a submenu if you had one
+                // const submenu = this.nextElementSibling;
+                // submenu.classList.toggle('active');
+            });
+        });
+    </script>
+    <script src="cart.js"></script>
+    <script>
+        // Update cart display when cart opens
+        cartToggle.addEventListener('click', () => {
+            showCart();
+            openCart();
+        });
+        
+        // Add to cart for bestsellers
+        document.querySelectorAll('.product-card .btn-primary').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const card = e.target.closest('.product-card');
+                const name = card.querySelector('.product-title').textContent;
+                const price = card.querySelector('.product-price').textContent.replace('$', '');
+                addToCart(name, price);
+            });
+        });
+    </script>
+</body>
+</html>

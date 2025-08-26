@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Glamora</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #333333;
+            background-color: #F8F0E9;
+        }
+        
+        :root {
+            --primary-color: #CD7E59;
+            --secondary-color: #F8F0E9;
+            --hover-color: #B86B47;
+            --light-pink: #F9D5C7;
+            --white: #FFFFFF;
+            --black: #000000;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-family: 'Times New Roman', serif;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: inherit;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        .icons {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .icons button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        /* Hero Section */
+        .about-hero {
+            background: linear-gradient(135deg, var(--light-pink), var(--secondary-color));
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .hero-title {
+            font-family: 'Times New Roman', serif;
+            font-size: 56px;
+            font-weight: bold;
+            margin-bottom: 24px;
+        }
+        
+        .hero-subtitle {
+            font-size: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+        
+        /* Story Section */
+        .story-section {
+            background-color: var(--white);
+            padding: 80px 0;
+        }
+        
+        .story-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .story-text h2 {
+            font-family: 'Times New Roman', serif;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 24px;
+        }
+        
+        .story-text p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .story-image {
+            aspect-ratio: 4 / 3;
+            background: var(--light-pink);
+            border-radius: 12px;
+        }
+        
+        /* Values Section */
+        .values-section {
+            background-color: var(--secondary-color);
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            font-family: 'Times New Roman', serif;
+            font-size: 42px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .value-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--light-pink);
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+        
+        .value-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        
+        .value-description {
+            line-height: 1.6;
+        }
+        
+        /* Impact Section */
+        .impact-section {
+            background-color: var(--white);
+            padding: 80px 0;
+        }
+        
+        .impact-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 16px 32px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--hover-color);
+        }
+        
+        /* Founder Section */
+        .founder-section {
+            background-color: var(--secondary-color);
+            padding: 80px 0;
+        }
+        
+        .founder-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .founder-image {
+            aspect-ratio: 3 / 4;
+            background: var(--light-pink);
+            border-radius: 12px;
+        }
+        
+        .founder-text h2 {
+            font-family: 'Times New Roman', serif;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 24px;
+        }
+        
+        .founder-text p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .founder-signature {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-style: normal !important;
+        }
+        
+        /* Community Section */
+        .community-section {
+            background-color: var(--white);
+            padding: 80px 0;
+        }
+        
+        .community-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .community-text h3 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .community-text p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .community-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 32px;
+        }
+        
+        .community-stat {
+            text-align: center;
+        }
+        
+        .community-stat .stat-number {
+            display: block;
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+        
+        .community-stat .stat-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .community-image {
+            aspect-ratio: 4 / 3;
+            background: var(--light-pink);
+            border-radius: 12px;
+        }
+        
+        .impact-quote {
+            background: var(--light-pink);
+            padding: 32px;
+            border-radius: 12px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .impact-quote p {
+            font-size: 18px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 42px;
+            }
+            
+            .hero-subtitle {
+                font-size: 20px;
+            }
+            
+            .story-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .impact-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .founder-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .community-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .community-stats {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo"><a href="brbgg.html" style="text-decoration: none; color: inherit;">Glamora</a></div>
+                <nav>
+                    <ul>
+                        <li><a href="brbgg.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="shade-finder.html">Shade Finder</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </nav>
+                <div class="icons">
+                    <button>🔍</button>
+                    <button>👤</button>
+                    <button>🛒</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="about-hero">
+        <div class="container">
+            <h1 class="hero-title">About Glamora</h1>
+            <p class="hero-subtitle">Breaking down unrealistic standards of perfection by making makeup that celebrates uniqueness and promotes self-acceptance.</p>
+        </div>
+    </section>
+
+    <section class="story-section">
+        <div class="container">
+            <div class="story-content">
+                <div class="story-text">
+                    <h2>Our Mission</h2>
+                    <p>Glamora was born from a desire to challenge conventional beauty standards. We believe that makeup should be about enhancing your natural beauty, not hiding it.</p>
+                    <p>Founded by Selena Gomez in 2020, our brand is built on the principles of self-acceptance, mental health advocacy, and creating products that work for everyone.</p>
+                    <p>We're not just a beauty brand—we're a movement that encourages people to embrace what makes them glamorous.</p>
+                </div>
+                <div class="story-image"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="founder-section">
+        <div class="container">
+            <div class="founder-content">
+                <div class="founder-image"></div>
+                <div class="founder-text">
+                    <h2>A Message from Selena</h2>
+                    <p>"I wanted to start a conversation about how beauty can be a source of confidence, not anxiety. Glamora isn't about being someone else, but being who you are."</p>
+                    <p>"Mental health is something I'm passionate about, and I wanted to create a brand that could make a real difference in people's lives."</p>
+                    <p class="founder-signature">— Selena Gomez, Founder</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="values-section">
+        <div class="container">
+            <h2 class="section-title">What We Stand For</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">✨</div>
+                    <h3 class="value-title">Authenticity</h3>
+                    <p class="value-description">We celebrate what makes you unique. Your individuality is your superpower.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3 class="value-title">Inclusivity</h3>
+                    <p class="value-description">Beauty belongs to everyone. Our products are designed for all skin tones, types, and ages.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">💚</div>
+                    <h3 class="value-title">Mental Health</h3>
+                    <p class="value-description">We're committed to destigmatizing mental health conversations and providing support.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🌱</div>
+                    <h3 class="value-title">Sustainability</h3>
+                    <p class="value-description">We're working towards more sustainable practices and packaging solutions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="impact-section">
+        <div class="container">
+            <div class="impact-content">
+                <h2 class="section-title">Glamora Impact Fund</h2>
+                <p>Mental health is just as important as physical health. That's why we created the Glamora Impact Fund to expand access to mental health services in underserved communities.</p>
+                
+                <div class="impact-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">$100M</div>
+                        <div class="stat-label">Goal to Raise by 2030</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1%</div>
+                        <div class="stat-label">of Annual Sales Donated</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">Partner Organizations</div>
+                    </div>
+                </div>
+                
+                <div class="impact-quote">
+                    <p>"By 2030, Glamora aims to raise $100 million for the Glamora Impact Fund to expand mental health services and education."</p>
+                </div>
+                
+                <button class="btn-primary" onclick="window.location.href='#'">Support Our Mission</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="community-section">
+        <div class="container">
+            <h2 class="section-title">Our Community</h2>
+            <div class="community-content">
+                <div class="community-text">
+                    <h3>More Than Makeup</h3>
+                    <p>Glamora is a community of people who believe in the power of self-acceptance and mental health advocacy.</p>
+                    <p>Join millions who are part of the conversation about redefining beauty standards and supporting mental wellness.</p>
+                    <div class="community-stats">
+                        <div class="community-stat">
+                            <span class="stat-number">10M+</span>
+                            <span class="stat-label">Community Members</span>
+                        </div>
+                        <div class="community-stat">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-label">Countries Worldwide</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="community-image"></div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
